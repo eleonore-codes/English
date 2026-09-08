@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0f5f68">
+<title>English 7</title>
+<style>
+:root{
+  --bg:#0b1418; --panel:#10262b; --panel2:#14333a; --petrol:#0f5f68;
+  --petrol2:#147784; --text:#eef6f7; --muted:#b7c9cc; --green:#2e9b67;
+  --line:#2c4b51;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  background:var(--bg);color:var(--text)
+}
+a{color:inherit;text-decoration:none}
+.app{max-width:980px;margin:auto;padding:16px 14px 32px}
+.hero{
+  background:linear-gradient(180deg,var(--panel2),var(--panel));
+  border:1px solid var(--line);border-radius:24px;padding:22px;margin-bottom:18px
+}
+.eyebrow{color:#9fd4d8;font-size:.84rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em}
+h1{font-size:clamp(2rem,7vw,3rem);margin:.3rem 0 .45rem;line-height:1}
+.hero p{color:var(--muted);line-height:1.55;margin:.7rem 0 0;max-width:720px}
+.units{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.tile{
+  display:flex;flex-direction:column;min-height:270px;background:var(--panel);
+  border:1px solid var(--line);border-radius:20px;padding:18px
+}
+.tile.active{border-color:var(--petrol2)}
+.tile.active:hover{background:#123038;transform:translateY(-2px)}
+.tile.active:focus-visible{outline:3px solid #9fd4d8;outline-offset:3px}
+.unit{font-size:.82rem;color:#9fd4d8;font-weight:800;text-transform:uppercase;letter-spacing:.06em}
+.tile h2{font-size:1.25rem;line-height:1.25;margin:.4rem 0 .7rem}
+.topics{padding-left:1.15rem;margin:0 0 16px;color:#d9e8ea;line-height:1.5;font-size:.93rem}
+.tile-footer{margin-top:auto;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.status{padding:7px 10px;border-radius:999px;background:#18343a;color:var(--muted);font-size:.82rem;font-weight:800}
+.status.live{background:rgba(46,155,103,.17);color:#c9f2dc;border:1px solid rgba(46,155,103,.55)}
+.open{background:var(--petrol);padding:10px 13px;border-radius:12px;font-weight:800}
+.disabled{opacity:.66}
+.extra{
+  margin-top:14px;background:var(--panel);border:1px solid var(--line);
+  border-radius:20px;padding:18px
+}
+.extra h2{margin:.35rem 0 .55rem;font-size:1.2rem}
+.extra p{margin:0;color:var(--muted);line-height:1.5}
+.note{text-align:center;color:var(--muted);font-size:.85rem;margin-top:18px}
+.site-footer{
+  margin-top:24px;padding:22px 14px 4px;border-top:1px solid var(--line);
+  text-align:center;color:var(--muted);font-size:.86rem;line-height:1.6
+}
+.site-footer strong{color:var(--text);font-weight:750}
+@media(max-width:560px){.app{padding:12px}.hero{padding:18px}.tile{min-height:0}}
+@media(prefers-reduced-motion:reduce){.tile.active{transition:none}.tile.active:hover{transform:none}}
+</style>
+</head>
+<body>
+<main class="app">
+  <section class="hero">
+    <div class="eyebrow">Grammatik &amp; Vokabeln</div>
+    <h1>English 7</h1>
+    <p>Trainiere Grammatik und Vokabeln Schritt für Schritt. Unsichere Inhalte werden gezielt wiederholt, bis sie sicher sitzen.</p>
+  </section>
+
+  <section class="units">
+
+    <a class="tile active" href="english7_unit1_v0_9_1.html">
+      <div class="unit">Unit 1</div>
+      <h2>Past Tenses &amp; Connections</h2>
+      <ul class="topics">
+        <li>Past Progressive</li>
+        <li>Past Progressive vs. Simple Past</li>
+        <li>Present Perfect vs. Simple Past</li>
+        <li>Connectives</li>
+        <li>Compound Words</li>
+      </ul>
+      <div class="tile-footer">
+        <span class="status live">✓ Pilot aktiv</span>
+        <span class="open">Öffnen</span>
+      </div>
+    </a>
+
+    <article class="tile disabled">
+      <div class="unit">Unit 2</div>
+      <h2>Conditionals &amp; Relative Clauses</h2>
+      <ul class="topics">
+        <li>Conditional Clauses Type 1</li>
+        <li>Conditional Clauses Type 2</li>
+        <li>Relative Clauses</li>
+        <li>Contact Clauses</li>
+      </ul>
+      <div class="tile-footer"><span class="status">Noch nicht verfügbar</span></div>
+    </article>
+
+    <article class="tile disabled">
+      <div class="unit">Unit 3</div>
+      <h2>Past Perfect, Passive &amp; “the”</h2>
+      <ul class="topics">
+        <li>Past Perfect</li>
+        <li>Passive Voice</li>
+        <li>The Definite Article “the”</li>
+      </ul>
+      <div class="tile-footer"><span class="status">Noch nicht verfügbar</span></div>
+    </article>
+
+    <article class="tile disabled">
+      <div class="unit">Unit 4</div>
+      <h2>Pronouns, Questions &amp; Future</h2>
+      <ul class="topics">
+        <li>Possessive Pronouns</li>
+        <li>Questions &amp; Question Tags</li>
+        <li>Will-Future</li>
+        <li>Reflexive Pronouns</li>
+        <li>Reciprocal Pronouns</li>
+        <li>Some and Any</li>
+      </ul>
+      <div class="tile-footer"><span class="status">Noch nicht verfügbar</span></div>
+    </article>
+
+    <article class="tile disabled">
+      <div class="unit">Unit 5</div>
+      <h2>Comparison, Modals &amp; Adverbs</h2>
+      <ul class="topics">
+        <li>Prop Words “one” &amp; “ones”</li>
+        <li>Comparison of Adverbs</li>
+        <li>Modal Verbs &amp; Substitute Forms</li>
+        <li>Comparison of Adjectives</li>
+        <li>Adjective vs. Adverb</li>
+      </ul>
+      <div class="tile-footer"><span class="status">Noch nicht verfügbar</span></div>
+    </article>
+
+  </section>
+
+  <section class="extra">
+    <div class="unit">Zusatztraining</div>
+    <h2>Reported Speech</h2>
+    <p>Reported Speech with Backshift of Tenses wird als ergänzender Grammatikbereich integriert.</p>
+  </section>
+
+  <div class="note">Mobile-first · offline-fähig · Lernfortschritt wird lokal gespeichert</div>
+
+  <footer class="site-footer">
+    <div>Grammatik · Vokabeln · adaptives Training</div>
+    <div>Pädagogisches Konzept &amp; Entwicklung: <strong>Prof. Dr. Eleonore Soei-Winkels</strong></div>
+  </footer>
+</main>
+</body>
+</html>
