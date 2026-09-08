@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>English 7 · Unit 1 · Past Tenses & Connections</title>
+<style>
+:root{
+  --bg:#081317;--panel:#10252b;--petrol:#126b75;--line:#315058;
+  --text:#f1f7f8;--muted:#b8c9cc;--light:#f4fbfb;--ink:#102126;
+  --green:#2f9c68;--red:#c74d4d;--amber:#caa24a
+}
+*{box-sizing:border-box}
+html{font-size:17px}
+body{
+  margin:0;background:var(--bg);color:var(--text);
+  font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif;line-height:1.5
+}
+button,input{font:inherit}
+button{touch-action:manipulation}
+.app{max-width:900px;margin:auto;padding:16px 14px 44px}
+.top{margin-bottom:14px}
+.eyebrow{color:#a9dadd;font-size:.8rem;font-weight:800;text-transform:uppercase;letter-spacing:.07em}
+h1{font-size:clamp(1.6rem,6vw,2.35rem);line-height:1.1;margin:.2rem 0}
+.subtitle{color:var(--muted)}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:17px;margin-bottom:13px}
+.light{background:var(--light);color:var(--ink)}
+.progress{height:12px;background:#1a343b;border-radius:999px;overflow:hidden;margin-top:9px}
+.bar{height:100%;background:var(--petrol);width:0;transition:width .2s ease}
+.stats{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}
+.pill{background:#19363d;color:var(--muted);padding:6px 9px;border-radius:999px;font-size:.82rem;font-weight:700}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:11px}
+.menu{border:1px solid var(--line);background:var(--panel);color:var(--text);border-radius:18px;padding:17px;text-align:left;cursor:pointer;min-height:126px}
+.menu strong{display:block;font-size:1.05rem;margin-bottom:4px}
+.menu span{color:var(--muted);font-size:.9rem}
+.primary,.secondary,.choice{border-radius:14px;padding:13px 15px;cursor:pointer;min-height:50px}
+.primary{border:0;background:var(--petrol);color:#fff;font-weight:800}
+.secondary{border:1px solid var(--line);background:#18353c;color:var(--text)}
+.choice{width:100%;display:block;text-align:left;margin:9px 0;border:1px solid var(--line);background:#17343b;color:var(--text)}
+.choice:disabled,.primary:disabled{opacity:.65}
+.feedback{padding:12px 14px;border-radius:14px;margin-top:12px}
+.ok{border:1px solid var(--green);background:rgba(47,156,104,.16);color:#d5f5e4}
+.no{border:1px solid var(--red);background:rgba(199,77,77,.16);color:#ffdede}
+input[type=text]{width:100%;border:1px solid var(--line);border-radius:13px;padding:14px;background:#0d2228;color:var(--text);min-height:52px}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:13px}
+.hidden{display:none!important}
+.small{font-size:.88rem;color:var(--muted)}
+.question{font-size:1.18rem;margin:13px 0}
+.session-result{text-align:center}
+.session-result .big{font-size:2.05rem;font-weight:900}
+.skillbox{display:flex;justify-content:space-between;gap:10px;align-items:center;margin:8px 0 2px}
+.skillstate{font-weight:800}
+.state-new{color:var(--muted)}
+.state-practiced{color:#d9c57c}
+.state-unsure{color:#ffb2b2}
+.state-mastered{color:#a9e4c5}
+.reset{margin-top:18px;background:transparent;border:1px solid var(--line);color:var(--muted);padding:9px 12px;border-radius:12px}
+.note{font-size:.88rem;color:var(--muted);margin-top:7px}
+@media(max-width:560px){
+  html{font-size:18px}.app{padding:12px}.card{padding:15px}.menu{min-height:0}
+}
+</style>
+</head>
+<body>
+<main class="app">
+<header class="top">
+  <div class="eyebrow">English 7</div>
+  <h1>Unit 1 · Past Tenses &amp; Connections</h1>
+  <div class="subtitle">Grammatik, Vokabeln und adaptive Wiederholung</div>
+</header>
+
+<section id="dashboard">
+  <div class="card">
+    <strong>Dein Lernstand</strong>
+    <div class="progress" aria-label="Fortschritt"><div class="bar" id="bar"></div></div>
+    <div class="stats">
+      <span class="pill" id="nNew"></span>
+      <span class="pill" id="nPractice"></span>
+      <span class="pill" id="nUnsure"></span>
+      <span class="pill" id="nMaster"></span>
+    </div>
+    <div class="note">„Beherrscht“ wird erst erreicht, wenn ein Lernziel mehrfach und mindestens einmal aktiv seit dem letzten Fehler abgerufen wurde.</div>
+    <div id="areaProgress" class="note" style="margin-top:12px"></div>
+  </div>
+
+  <div class="grid">
+    <button class="menu" onclick="startSession('grammar')">
+      <strong>Grammatik</strong>
+      <span>Past Progressive, Zeitformen, Connectives und Compound Words</span>
+    </button>
+    <button class="menu" onclick="startSession('vocab')">
+      <strong>Vokabeln &amp; Chunks</strong>
+      <span>Vollständiger Unit-Wortschatz: erkennen und aktiv abrufen</span>
+    </button>
+    <button class="menu" onclick="startSession('verbs')">
+      <strong>Irregular Verbs</strong>
+      <span>Formen erkennen und im Kontext abrufen</span>
+    </button>
+    <button class="menu" onclick="startSession('mixed')">
+      <strong>Unit Training</strong>
+      <span>10 Aufgaben, unsichere Lernziele zuerst</span>
+    </button>
+  </div>
+</section>
+
+<section id="trainer" class="hidden">
+  <div class="card" tabindex="-1" id="taskCard">
+    <div class="small" id="counter"></div>
+    <div class="eyebrow" id="area"></div>
+    <div class="skillbox">
+      <span class="small">Lernzielstatus</span>
+      <span id="skillState" class="skillstate"></span>
+    </div>
+    <h2 id="title"></h2>
+    <div class="question" id="prompt"></div>
+    <div id="answerArea"></div>
+
+    <div id="feedback" class="feedback hidden" aria-live="polite"></div>
+    <div id="correction" class="card light hidden"></div>
+    <div id="rule" class="card light hidden"></div>
+
+    <div class="actions">
+      <button class="secondary" id="ruleBtn" onclick="toggleRule()">Regel ansehen</button>
+      <button class="primary hidden" id="nextBtn" onclick="next()">Nächste Aufgabe</button>
+      <button class="secondary" onclick="home()">Zur Übersicht</button>
+    </div>
+  </div>
+</section>
+
+<section id="result" class="hidden">
+  <div class="card session-result">
+    <div class="eyebrow">Training geschafft</div>
+    <div class="big" id="score"></div>
+    <p id="resultText"></p>
+    <div class="actions" style="justify-content:center">
+      <button class="primary" id="continueUnsure" onclick="repeatUnsure()">Unsichere weitertrainieren</button>
+      <button class="secondary" onclick="home()">Zur Übersicht</button>
+    </div>
+  </div>
+</section>
+
+<button class="reset" onclick="resetProgress()">Testfortschritt zurücksetzen</button>
+</main>
+
+<script>
+const BASE_SESSION = 10;
+const MAX_SESSION = 12;
+const MAX_UNSURE_MINI = 4;
+
+const SKILLS = {
+  past_prog_form:{group:"grammar",label:"Past Progressive bilden"},
+  past_prog_vs_past:{group:"grammar",label:"Past Progressive vs. Simple Past"},
+  pp_vs_sp:{group:"grammar",label:"Present Perfect vs. Simple Past"},
+  connectives_reason:{group:"grammar",label:"Connectives: Grund"},
+  connectives_contrast:{group:"grammar",label:"Connectives: Gegensatz"},
+  connectives_purpose:{group:"grammar",label:"Connectives: Zweck"},
+  compounds:{group:"grammar",label:"Compound Words"},
+  verb_write:{group:"verbs",label:"Irregular verb: write – wrote – written"}
+};
+
+const ITEMS = [
+{id:"g1a",skill:"past_prog_form",area:"Past Progressive",title:"Form erkennen",prompt:'Setze den Satz ins <strong>Past Progressive</strong>:<br><span lang="en">Yesterday at five, the children ___ running around.</span>',type:"mc",choices:[{text:"were",lang:"en"},{text:"are",lang:"en"}],answers:["were"],weight:1,active:false,answerLang:"en",rule:"Past Progressive = was/were + Verb-ing. Bei einem Subjekt im Plural verwendest du were.",feedback:'<span lang="en">Yesterday at five, the children <strong>were running</strong> around.</span>'},
+{id:"g1b",skill:"past_prog_form",area:"Past Progressive",title:"Form aktiv abrufen",prompt:'Setze ins <strong>Past Progressive</strong>:<br><span lang="en">Yesterday at six, Caroline ___ singing a song.</span>',type:"text",answers:["was"],weight:3,active:true,answerLang:"en",rule:"Past Progressive = was/were + Verb-ing.",feedback:'<span lang="en">Caroline <strong>was singing</strong> a song.</span>'},
+{id:"g1c",skill:"past_prog_form",area:"Past Progressive",title:"Frage aktiv bilden",prompt:'Bilde die Frage im <strong>Past Progressive</strong>:<br><span lang="en">Yesterday morning, ___ they waiting for the bus?</span>',type:"text",answers:["were"],weight:3,active:true,answerLang:"en",rule:"Bei Fragen steht was/were vor dem Subjekt: Were they waiting ...?",feedback:'<span lang="en"><strong>Were</strong> they waiting for the bus?</span>'},
+
+{id:"g2a",skill:"past_prog_vs_past",area:"Past Progressive vs. Simple Past",title:"Hintergrundhandlung erkennen",prompt:'Welche Form zeigt, dass Emmas Handlung <strong>schon im Verlauf war</strong>?<br><span lang="en">Emma ___ Rajiv when Gillian called.</span>',type:"mc",choices:[{text:"was messaging",lang:"en"},{text:"messaged",lang:"en"}],answers:["was messaging"],weight:1,active:false,answerLang:"en",rule:"Eine Handlung, die schon im Verlauf war, steht im Past Progressive. Das neu eintretende Ereignis steht häufig im Simple Past.",feedback:'<span lang="en">Emma <strong>was messaging</strong> Rajiv when Gillian called.</span>'},
+{id:"g2b",skill:"past_prog_vs_past",area:"Past Progressive vs. Simple Past",title:"Neues Ereignis einsetzen",prompt:'<span lang="en">The children were running around when the bell ___.</span>',type:"text",answers:["rang"],weight:3,active:true,answerLang:"en",rule:"Das neue, punktuelle Ereignis steht hier im Simple Past.",feedback:'<span lang="en">... when the bell <strong>rang</strong>.</span>'},
+{id:"g2c",skill:"past_prog_vs_past",area:"Past Progressive vs. Simple Past",title:"Laufende Handlung einsetzen",prompt:'<span lang="en">Mia ___ home when it started to rain.</span> <span class="small">(walk)</span>',type:"text",answers:["was walking"],weight:3,active:true,answerLang:"en",rule:"Die Handlung war schon im Verlauf → Past Progressive.",feedback:'<span lang="en">Mia <strong>was walking</strong> home when it started to rain.</span>'},
+
+{id:"g3a",skill:"pp_vs_sp",area:"Present Perfect vs. Simple Past",title:"Zeitbezug entscheiden",prompt:'Welche Zeitform passt zu einer Handlung mit der abgeschlossenen Zeitangabe <strong>yesterday</strong>?',type:"mc",choices:[{text:"Simple Past",lang:"en"},{text:"Present Perfect",lang:"en"}],answers:["simple past"],weight:1,active:false,answerLang:"en",rule:"Bei einer abgeschlossenen Zeitangabe wie yesterday oder last week verwendest du das Simple Past.",feedback:"<strong>Simple Past</strong> ist hier richtig."},
+{id:"g3b",skill:"pp_vs_sp",area:"Present Perfect vs. Simple Past",title:"Past Participle aktiv abrufen",prompt:'<span lang="en">Zamira has never ___ to Portugal.</span>',type:"text",answers:["been"],weight:3,active:true,answerLang:"en",rule:"Present Perfect = have/has + Past Participle. Bei Erfahrungen ohne abgeschlossenen Zeitpunkt kann das Present Perfect passen.",feedback:'<span lang="en">Zamira has never <strong>been</strong> to Portugal.</span>'},
+{id:"g3c",skill:"pp_vs_sp",area:"Present Perfect vs. Simple Past",title:"Abgeschlossene Vergangenheit",prompt:'<span lang="en">We ___ to London last year.</span> <span class="small">(go)</span>',type:"text",answers:["went"],weight:3,active:true,answerLang:"en",rule:"last year bezeichnet einen abgeschlossenen Zeitraum → Simple Past.",feedback:'<span lang="en">We <strong>went</strong> to London last year.</span>'},
+
+{id:"g4a",skill:"connectives_reason",area:"Connectives",title:"Grund ausdrücken",prompt:'<span lang="en">Charlie is happy ___ he can play football after school.</span>',type:"text",answers:["because"],weight:3,active:true,answerLang:"en",rule:"because = weil. Es nennt einen Grund.",feedback:"<strong>because</strong> nennt den Grund."},
+{id:"g4b",skill:"connectives_reason",area:"Connectives",title:"Grund erkennen",prompt:'Welches Wort bedeutet hier „weil“?',type:"mc",choices:[{text:"because",lang:"en"},{text:"but",lang:"en"}],answers:["because"],weight:1,active:false,answerLang:"en",rule:"because = weil.",feedback:"<strong>because</strong> = weil."},
+
+{id:"g5a",skill:"connectives_contrast",area:"Connectives",title:"Gegensatz ausdrücken",prompt:'<span lang="en">Mia likes ice cream, ___ she doesn’t like chocolate.</span>',type:"text",answers:["but"],weight:3,active:true,answerLang:"en",rule:"but = aber. Es verbindet gegensätzliche Aussagen.",feedback:"<strong>but</strong> zeigt den Gegensatz."},
+{id:"g5b",skill:"connectives_contrast",area:"Connectives",title:"Gegensatz erkennen",prompt:'Welches Wort bedeutet „aber“?',type:"mc",choices:[{text:"but",lang:"en"},{text:"because",lang:"en"}],answers:["but"],weight:1,active:false,answerLang:"en",rule:"but = aber.",feedback:"<strong>but</strong> = aber."},
+
+{id:"g6a",skill:"connectives_purpose",area:"Connectives",title:"Zweck erkennen",prompt:'Welches Bindewort bedeutet hier „damit“?',type:"mc",choices:[{text:"so that",lang:"en"},{text:"because",lang:"en"}],answers:["so that"],weight:1,active:false,answerLang:"en",rule:"so that kann einen Zweck ausdrücken: damit.",feedback:"<strong>so that</strong> = damit."},
+{id:"g6b",skill:"connectives_purpose",area:"Connectives",title:"Zweck aktiv abrufen",prompt:'<span lang="en">I wrote it down ___ I wouldn’t forget it.</span>',type:"text",answers:["so that"],weight:3,active:true,answerLang:"en",rule:"so that = damit; es kann einen Zweck ausdrücken.",feedback:'<span lang="en">I wrote it down <strong>so that</strong> I wouldn’t forget it.</span>'},
+
+{id:"g7a",skill:"compounds",area:"Compound Words",title:"Wort zusammensetzen",prompt:'<span lang="en">head + phones = ?</span>',type:"text",answers:["headphones"],weight:3,active:true,answerLang:"en",rule:"Compound words verbinden Wörter zu einem neuen Begriff.",feedback:"<strong>headphones</strong> ist ein zusammengesetztes Wort."},
+{id:"g7b",skill:"compounds",area:"Compound Words",title:"Compound erkennen",prompt:'Welches Wort ist aus zwei Wörtern zusammengesetzt?',type:"mc",choices:[{text:"headphones",lang:"en"},{text:"brave",lang:"en"}],answers:["headphones"],weight:1,active:false,answerLang:"en",rule:"headphones = head + phones.",feedback:"<strong>headphones</strong> ist ein compound word."},
+
+
+
+
+
+{id:"i1a",skill:"verb_write",area:"Irregular Verbs",title:"Simple Past abrufen",prompt:'<span lang="en">write → ?</span>',type:"text",answers:["wrote"],weight:3,active:true,answerLang:"en",rule:"write – wrote – written",feedback:'<span lang="en"><strong>wrote</strong></span>'},
+{id:"i1b",skill:"verb_write",area:"Irregular Verbs",title:"Past Participle abrufen",prompt:'<span lang="en">write → wrote → ?</span>',type:"text",answers:["written"],weight:3,active:true,answerLang:"en",rule:"write – wrote – written",feedback:'<span lang="en"><strong>written</strong></span>'},
+{id:"i1c",skill:"verb_write",area:"Irregular Verbs",title:"Simple Past im Kontext",prompt:'<span lang="en">Yesterday she ___ a message.</span> <span class="small">(write)</span>',type:"text",answers:["wrote"],weight:3,active:true,answerLang:"en",rule:"Yesterday → Simple Past. write → wrote.",feedback:'<span lang="en">Yesterday she <strong>wrote</strong> a message.</span>'},
+{id:"i1d",skill:"verb_write",area:"Irregular Verbs",title:"Past Participle im Kontext",prompt:'<span lang="en">She has ___ three messages.</span> <span class="small">(write)</span>',type:"text",answers:["written"],weight:3,active:true,answerLang:"en",rule:"Present Perfect = has/have + Past Participle. write → written.",feedback:'<span lang="en">She has <strong>written</strong> three messages.</span>'}
+];
+
+
+// ----- Complete Unit 1 content from the photographed word-list pages -----
+const FULL_VOCAB = [["brave","mutig"],["to get together","sich treffen / zusammenkommen"],["uncomfortable","unbequem / unbehaglich"],["to be on the move", "unterwegs sein, sich im Umbruch befinden"], ["advice", "Ratschlag, Ratschläge"], ["magazine", "Zeitschrift, Magazin"], ["desperate", "verzweifelt"], ["to make sth", "etwas schaffen, etwas hinbekommen"], ["might", "könnte, vielleicht"], ["coach", "Trainer/in, Coach, Sportlehrer/in"], ["Good luck!", "Viel Glück!"], ["to argue (about)", "sich streiten (wegen)"], ["all the time", "die ganze Zeit"], ["stuff", "Zeug, Sachen"], ["Yours", "Mit freundlichen Grüßen, Viele Grüße"], ["perfectly", "vollkommen, perfekt"], ["normal", "normal, üblich"], ["obviously", "offensichtlich, deutlich"], ["on the one hand", "einerseits, auf der einen Seite"], ["on the other hand", "andererseits, auf der anderen Seite"], ["to organize", "organisieren"], ["to get married", "heiraten"], ["to get divorced", "geschieden werden"], ["Welshman", "Waliser, Bewohner von Wales"], ["to marry", "heiraten"], ["embarrassed", "verlegen, peinlich berührt"], ["although", "obwohl"], ["to fall in love (with sb)", "sich (in jdn) verlieben"], ["to die", "sterben"], ["broken", "zerbrochen, kaputt, gebrochen"], ["to belong to", "(dazu)gehören"], ["lost", "verlaufen, verloren"], ["powerful", "mächtig, stark, druckvoll"], ["moving", "bewegend, (sich) bewegend"], ["dramatic", "dramatisch"], ["depressed", "deprimiert, depressiv"], ["to illustrate", "illustrieren"], ["optimistic", "optimistisch"], ["mood", "Laune, Stimmung"], ["patient", "geduldig"], ["empty", "leer"], ["goodbye", "Abschied"], ["to panic", "in Panik geraten"], ["to be missing", "fehlen"], ["flat", "(Etagen)wohnung, Mietwohnung"], ["to persuade", "überreden, überzeugen"], ["change", "(Ver)änderung, Wechsel, Umstellung"], ["point of view", "Ansicht, Einstellung, Sicht"], ["another", "noch eine/r/s, eine/r andere/r/s"], ["ASAP / as soon as possible", "so schnell wie möglich"], ["conversation", "Gespräch, Unterhaltung"], ["top", "oberes Ende, Spitze"], ["choice", "(Aus)wahl"], ["to chat", "plaudern, chatten"], ["toy", "Spielzeug"], ["puppy", "junger Hund, Welpe"], ["I see what you mean.", "Ich weiß, was du meinst."], ["to expect", "erwarten, rechnen"], ["such", "solch(e/r/es)"], ["completely", "völlig"], ["helpless", "hilflos, machtlos"], ["to move", "(sich) bewegen, hier: (um)ziehen"], ["to break the news to sb", "jdm die Nachricht beibringen"], ["gently", "sanft, behutsam, vorsichtig"], ["to get out of sth", "aus etw herauskommen, hier: aus etw verschwinden"], ["to turn away", "sich abwenden, wegrücken"], ["still", "(immer) noch, noch immer"], ["even if", "selbst wenn"], ["country", "Land"], ["UK (= the United Kingdom)", "Vereinigtes Königreich"], ["England", "England"], ["Scotland", "Schottland"], ["Northern Ireland", "Nordirland"], ["capital", "Hauptstadt"], ["Welsh", "Walisisch, walisisch"], ["the other one", "der/die andere"], ["note", "Notiz, Mitteilung"], ["action", "Handeln, Handlung, Tat"], ["to travel", "reisen"], ["to drive – drove – driven", "fahren"], ["to pack", "(ein)packen"], ["simple", "einfach"], ["to feel like doing sth", "Lust haben, etwas zu tun"], ["to break down", "stehen bleiben, versagen, zusammenbrechen"], ["nobody", "niemand, keiner"], ["helpful", "hilfsbereit, hilfreich, nützlich"], ["useful", "nützlich"], ["unrealistic", "unrealistisch, nicht realistisch"], ["harsh", "rau, hart, streng"], ["understanding", "verständnisvoll"], ["to scan (for)", "absuchen (nach), überfliegen, (ein)scannen"], ["to make up", "etwas (neu) ausdenken, (ein)sammeln"], ["out of", "aus"], ["reaction (to)", "Reaktion (auf)"], ["which", "welche(r/s)"], ["while", "während, als"], ["rather", "ziemlich, recht"], ["wedding", "Hochzeit"], ["pancake", "Pfannkuchen, Omelette"], ["syrup", "Ahornsirup, Sirup"], ["to turn on", "einschalten, aufdrehen, anmachen"], ["to sing along", "mitsingen"], ["however", "jedoch, aber"], ["smile", "Lächeln"], ["quite", "ziemlich, ganz"], ["town", "Stadt"], ["to slam the door shut", "die Tür zuschlagen"], ["coffee", "Kaffee"], ["to take a deep breath", "tief Luft holen"], ["to hug", "umarmen"], ["kind", "Art, Sorte"], ["palaeontologist", "Paläontologe/Paläontologin, Wissenschaftler/in"], ["headphones", "Kopfhörer"], ["so", "also, deshalb, hier: damit"], ["not even", "noch nicht einmal"], ["experience", "Erfahrung, Erlebnis"], ["following", "folgende/r/s"], ["to give up – gave up – given up", "aufgeben, resignieren"], ["apart from sth/sb", "von etw/jdm abgesehen"], ["moment", "Moment, Augenblick"], ["stall", "(Verkaufs)stand"], ["fight", "Kampf, Streit"], ["as", "weil, da"], ["over", "hinüber, herüber, drüben, vorbei"], ["autograph", "Autogramm"], ["latest", "neueste/r/s, letzte/r/s"], ["match", "Spiel, Partie"], ["costume", "Kostüm"], ["to make sb do sth", "jdn zu etwas bringen, jdn etwas tun lassen"], ["polite", "höflich"], ["to take off – took off – taken off", "abnehmen, ausziehen, abziehen"], ["to go through – went through – gone through", "durchgehen"], ["directly", "direkt, genau, sofort"], ["particular", "bestimmt, besondere/r/s, speziell"], ["to comment (on)", "kommentieren"], ["to have sth in common (with sb)", "etwas (mit jdm) gemeinsam haben"], ["draft", "Entwurf"], ["spelling", "Rechtschreibung, Rechtschreib-"]];
+const SAY_IT = [["Vermutungen anstellen", "Don't you think it's ...?"], ["Vermutungen anstellen", "It's probably ... because ..."], ["Vermutungen anstellen", "Maybe it's ..."], ["Vermutungen anstellen", "It's certainly not ... because ..."], ["Vermutungen anstellen", "It can't be ... because ..."], ["Vermutungen anstellen", "She probably plans to ..."], ["um Rat oder Hilfe bitten", "Please help me, I'm desperate."], ["um Rat oder Hilfe bitten", "What should I do?"], ["um Rat oder Hilfe bitten", "Please give me some advice."], ["um Rat oder Hilfe bitten", "You must help me, please!"], ["um Rat oder Hilfe bitten", "What can I do?"], ["Ratschläge geben", "Think about what you can do to ..."], ["Ratschläge geben", "You could ..."], ["Ratschläge geben", "You could be a bit nicer towards her."], ["Ratschläge geben", "Perhaps it would be a good idea to ..."], ["Ratschläge geben", "... is certainly not the answer."], ["Ratschläge geben", "You should really try to ..."], ["Ratschlag beurteilen", "I really don't think her advice is very helpful because ..."], ["Ratschlag beurteilen", "Her advice is useful because ..."], ["ausdrücken, dass du unglücklich bist", "I'm desperate."], ["ausdrücken, dass du unglücklich bist", "I am so unhappy!"], ["über Gefühle sprechen", "I was rather nervous."], ["über Gefühle sprechen", "I was so happy about ..."], ["über Gefühle sprechen", "I was feeling quite upset when ..."], ["über Gefühle sprechen", "I was a bit disappointed by Gillian's reaction."], ["über Gefühle sprechen", "I was relieved that ..."], ["über Gefühle sprechen", "I was relieved to ..."], ["über Gefühle sprechen", "I was feeling calmer now."], ["über Gefühle sprechen", "I was shocked when ..."], ["über Gefühle sprechen", "She sounded really angry."], ["über Gefühle sprechen", "I think she was hurt and scared."], ["über einen Song sprechen", "To me, the music sounds sad/gentle/strong/passionate because it has a powerful beat/a catchy tune/a beautiful melody."], ["über einen Song sprechen", "I think the lyrics are moving/dramatic/passionate/silly/sentimental, for example when the singer says ..."], ["über einen Song sprechen", "The person in the song seems to be depressed/disappointed/miserable/angry about ..., for example in line(s) ..."], ["Feedback geben", "In part 1 you wrote about what happened but you didn't include Gillian's feelings."], ["Feedback geben", "The parts of your story fit very well together."], ["Feedback geben", "Maybe you could have ..."], ["sagen, dass du etwas nicht glauben kannst", "You won't believe what I've just heard!"], ["auf Gesprächspartner reagieren", "I see what you mean."], ["auf Gesprächspartner reagieren", "Great idea!"], ["auf Gesprächspartner reagieren", "Sounds OK."], ["etwas vorschlagen", "What about ...?"], ["etwas vorschlagen", "Or maybe put together a playlist?"], ["über eine andere Person sprechen", "You were so brave."], ["über eine andere Person sprechen", "That was so cool of you."], ["über eine andere Person sprechen", "You look so embarrassed in this picture."], ["über eine andere Person sprechen", "You felt uncomfortable."]];
+
+
+
+const VOCAB_ACCEPTED = {
+  "UK (= the United Kingdom)":["UK","the UK","United Kingdom","the United Kingdom","UK (= the United Kingdom)"],
+  "ASAP / as soon as possible":["ASAP","as soon as possible","ASAP / as soon as possible"],
+  "to drive – drove – driven":["drive","to drive","drive – drove – driven","to drive – drove – driven"],
+  "to give up – gave up – given up":["give up","to give up","give up – gave up – given up","to give up – gave up – given up"],
+  "to take off – took off – taken off":["take off","to take off","take off – took off – taken off","to take off – took off – taken off"],
+  "to go through – went through – gone through":["go through","to go through","go through – went through – gone through","to go through – went through – gone through"],
+  "to fall in love (with sb)":["fall in love","to fall in love","fall in love with","to fall in love with","to fall in love (with sb)"],
+  "to argue (about)":["argue","to argue","argue about","to argue about","to argue (about)"],
+  "to scan (for)":["scan","to scan","scan for","to scan for","to scan (for)"],
+  "reaction (to)":["reaction","reaction to","reaction (to)"],
+  "to comment (on)":["comment","to comment","comment on","to comment on","to comment (on)"],
+  "to have sth in common (with sb)":["have something in common","to have something in common","have sth in common","to have sth in common","to have sth in common (with sb)"],
+  "to make sth":["make something","to make something","make sth","to make sth"],
+  "to get out of sth":["get out of something","to get out of something","get out of sth","to get out of sth"],
+  "to make sb do sth":["make somebody do something","to make somebody do something","make sb do sth","to make sb do sth"],
+  "to feel like doing sth":["feel like doing something","to feel like doing something","feel like doing sth","to feel like doing sth"]
+};
+
+function vocabAnswers(en){
+  const set=new Set(VOCAB_ACCEPTED[en]||[en]);
+  const originals=[...set];
+  originals.forEach(v=>{
+    set.add(v.replace(/\bsb\b/g,"somebody").replace(/\bsth\b/g,"something"));
+    set.add(v.replace(/\bsb\b/g,"someone").replace(/\bsth\b/g,"something"));
+    set.add(v.replace(/\s*\([^)]*\)\s*/g," ").replace(/\s+/g," ").trim());
+    if(/^to\s+/i.test(v)) set.add(v.replace(/^to\s+/i,""));
+  });
+  return [...set].filter(Boolean);
+}
+
+function vocabSkillId(term){return "fullv_"+term.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9]+/g,"_").replace(/^_|_$/g,"").slice(0,55)}
+function saySkillId(i){return "sayfull_"+i}
+
+
+const VOCAB_CATEGORIES = {
+  feelings:["desperate","optimistic","patient","depressed","helpless","embarrassed","uncomfortable","brave","powerful","moving","dramatic","polite","harsh","understanding"],
+  communication:["advice","to argue (about)","reaction (to)","to persuade","conversation","to comment (on)","draft","spelling","note","autograph"],
+  places:["country","UK (= the United Kingdom)","England","Scotland","Northern Ireland","capital","Welsh","Welshman","town","flat"],
+  people_relationships:["coach","patient","another","the other one","to get married","to get divorced","to marry","wedding","puppy","nobody","kind","palaeontologist"],
+  objects_daily:["magazine","stuff","headphones","costume","toy","coffee","pancake","syrup","stall"],
+  actions:["to make sth","to panic","to be missing","to travel","to pack","to move","to turn away","to scan (for)","to make up","to turn on","to sing along","to slam the door shut","to take a deep breath","to hug","to organize","to chat"],
+  connectors:["although","however","even if","while","rather","quite","as","so","apart from sth/sb","on the one hand","on the other hand","all the time"],
+  chunks:["to fall in love (with sb)","to belong to","to break the news to sb","to get out of sth","to feel like doing sth","to break down","to make sb do sth","to have sth in common (with sb)","to get together"]
+};
+function vocabCategory(en){
+  for(const [cat,terms] of Object.entries(VOCAB_CATEGORIES)){
+    if(terms.includes(en)) return cat;
+  }
+  const x=en.toLowerCase();
+  if(/^to\s/.test(x)) return "actions";
+  if(/^(although|however|while|as|so|even if|rather|quite|still|which|such|another|following)$/.test(x)) return "connectors";
+  if(/(ly$)/.test(x)) return "descriptors";
+  if(/(man$|ologist$)/.test(x)) return "people_relationships";
+  if(/(land|ireland|scotland|england|welsh|country|capital|town|flat)/.test(x)) return "places";
+  if(/(advice|conversation|reaction|comment|draft|spelling|note|autograph|goodbye)/.test(x)) return "communication";
+  return "general";
+}
+
+const AUTO_CATEGORY_POOLS={};
+FULL_VOCAB.forEach(([en,de])=>{
+  const cat=vocabCategory(en);
+  if(!AUTO_CATEGORY_POOLS[cat]) AUTO_CATEGORY_POOLS[cat]=[];
+  AUTO_CATEGORY_POOLS[cat].push([en,de]);
+});
+
+function categoryDistractors(en,de){
+  const cat=vocabCategory(en);
+  return (AUTO_CATEGORY_POOLS[cat]||[])
+    .filter(([term,meaning])=>term!==en && meaning!==de)
+    .map(([,meaning])=>meaning);
+}
+
+const CURATED_DE_DISTRACTORS = {
+  "patient":["hilfsbereit, hilfreich, nützlich","verständnisvoll"],
+  "helpful":["nützlich","verständnisvoll"],
+  "useful":["hilfsbereit, hilfreich, nützlich","unrealistisch, nicht realistisch"],
+  "optimistic":["deprimiert, depressiv","geduldig"],
+  "depressed":["optimistisch","verzweifelt"],
+  "desperate":["deprimiert, depressiv","hilflos, machtlos"],
+  "helpless":["hilfsbereit, hilfreich, nützlich","verständnisvoll"],
+  "powerful":["bewegend, (sich) bewegend","dramatisch"],
+  "moving":["dramatisch","mächtig, stark, druckvoll"],
+  "dramatic":["bewegend, (sich) bewegend","optimistisch"],
+  "polite":["geduldig","verständnisvoll"],
+  "harsh":["sanft, behutsam, vorsichtig","verständnisvoll"],
+  "gently":["rau, hart, streng","direkt, genau, sofort"],
+  "empty":["vollkommen, perfekt","mächtig, stark, druckvoll"],
+  "normal":["offensichtlich, deutlich","unrealistisch, nicht realistisch"],
+  "obviously":["völlig","jedoch, aber"],
+  "completely":["völlig","ziemlich, ganz"],
+  "quite":["ziemlich, ganz","völlig"],
+  "rather":["ziemlich, recht","jedoch, aber"]
+};
+
+const germanPool=FULL_VOCAB.map(v=>v[1]);
+FULL_VOCAB.forEach((entry,idx)=>{
+  const [en,de]=entry, sid=vocabSkillId(en);
+  SKILLS[sid]={group:"vocab",label:"Vocabulary: "+en};
+
+  let distractors=germanPool.filter(x=>x!==de);
+  const curated=CURATED_DE_DISTRACTORS[en]||[];
+  const semantic=categoryDistractors(en,de);
+  const candidates=[...curated,...semantic,...distractors]
+    .filter((x,pos,arr)=>norm(x)!==norm(de) && arr.findIndex(y=>norm(y)===norm(x))===pos);
+  const d1=candidates[0]||"—";
+  const d2=candidates[1]||distractors.find(x=>norm(x)!==norm(de) && norm(x)!==norm(d1))||"—";
+  const choices=[{text:de,lang:"de"},{text:d1,lang:"de"},{text:d2,lang:"de"}].sort(()=>Math.random()-.5);
+
+  ITEMS.push({
+    id:sid+"_recognition",skill:sid,area:"Vocabulary",title:"Englisch → Deutsch",
+    prompt:`<span lang="en">${en}</span>`,type:"mc",choices,answers:[de],
+    weight:1,active:false,answerLang:"de",
+    rule:`<span lang="en">${en}</span> = ${de}`,
+    feedback:`<span lang="en"><strong>${en}</strong></span> = ${de}`
+  });
+  ITEMS.push({
+    id:sid+"_recall",skill:sid,area:"Vocabulary",title:"Deutsch → Englisch",
+    prompt:de,type:"text",answers:vocabAnswers(en),displayAnswer:en,weight:3,active:true,answerLang:"en",
+    rule:`<span lang="en">${en}</span> = ${de}`,
+    feedback:`<span lang="en"><strong>${en}</strong></span>`
+  });
+});
+
+
+const SAY_GROUPS = [
+  {id:"suppose",label:"Vermutungen anstellen",phrases:["Don't you think it's ...?","It's probably ... because ...","Maybe it's ...","It's certainly not ... because ...","It can't be ... because ...","She probably plans to ..."],guided:{prompt:"Maybe ___ ...",answers:["it's"],display:"Maybe it's ..."}},
+  {id:"ask_help",label:"Um Rat oder Hilfe bitten",phrases:["Please help me, I'm desperate.","What should I do?","Please give me some advice.","You must help me, please!","What can I do?"],guided:{prompt:"What ___ I do?",answers:["should"],display:"What should I do?"}},
+  {id:"give_advice",label:"Ratschläge geben",phrases:["Think about what you can do to ...","You could ...","You could be a bit nicer towards her.","Perhaps it would be a good idea to ...","... is certainly not the answer.","You should really try to ..."],guided:{prompt:"You ___ really try to ...",answers:["should"],display:"You should really try to ..."}},
+  {id:"judge_advice",label:"Ratschläge beurteilen",phrases:["I really don't think her advice is very helpful because ...","Her advice is useful because ..."],guided:{prompt:"Her advice is ___ because ...",answers:["useful"],display:"Her advice is useful because ..."}},
+  {id:"unhappy",label:"Ausdrücken, dass du unglücklich bist",phrases:["I'm desperate.","I am so unhappy!"],guided:{prompt:"I am so ___!",answers:["unhappy"],display:"I am so unhappy!"}},
+  {id:"feelings",label:"Über Gefühle sprechen",phrases:["I was rather nervous.","I was so happy about ...","I was feeling quite upset when ...","I was a bit disappointed by Gillian's reaction.","I was relieved that ...","I was relieved to ...","I was feeling calmer now.","I was shocked when ...","She sounded really angry.","I think she was hurt and scared."],guided:{prompt:"I was rather ___.",answers:["nervous"],display:"I was rather nervous."}},
+  {id:"song",label:"Über einen Song sprechen",phrases:["To me, the music sounds sad/gentle/strong/passionate because it has a powerful beat/a catchy tune/a beautiful melody.","I think the lyrics are moving/dramatic/passionate/silly/sentimental, for example when the singer says ...","The person in the song seems to be depressed/disappointed/miserable/angry about ..., for example in line(s) ..."],guided:{prompt:"I think the ___ are moving ...",answers:["lyrics"],display:"I think the lyrics are moving ..."}},
+  {id:"feedback",label:"Feedback geben",phrases:["In part 1 you wrote about what happened but you didn't include Gillian's feelings.","The parts of your story fit very well together.","Maybe you could have ..."],guided:{prompt:"Maybe you ___ have ...",answers:["could"],display:"Maybe you could have ..."}},
+  {id:"disbelief",label:"Sagen, dass du etwas nicht glauben kannst",phrases:["You won't believe what I've just heard!"],guided:{prompt:"You won't ___ what I've just heard!",answers:["believe"],display:"You won't believe what I've just heard!"}},
+  {id:"react",label:"Auf Gesprächspartner reagieren",phrases:["I see what you mean.","Great idea!","Sounds OK."],guided:{prompt:"I see what you ___.",answers:["mean"],display:"I see what you mean."}},
+  {id:"suggest",label:"Etwas vorschlagen",phrases:["What about ...?","Or maybe put together a playlist?"],guided:{prompt:"What ___ ...?",answers:["about"],display:"What about ...?"}},
+  {id:"person",label:"Über eine andere Person sprechen",phrases:["You were so brave.","That was so cool of you.","You look so embarrassed in this picture.","You felt uncomfortable."],guided:{prompt:"You were so ___.",answers:["brave"],display:"You were so brave."}}
+];
+SAY_GROUPS.forEach((group,gi)=>{
+  const sid="saygroup_"+group.id;
+  SKILLS[sid]={group:"sayit",label:"Say it: "+group.label};
+
+  // Recognition: identify a suitable phrase for the communicative intention.
+  const distractGroup=SAY_GROUPS[(gi+3)%SAY_GROUPS.length];
+  ITEMS.push({
+    id:sid+"_recognition",skill:sid,area:"Say it in English",title:"Passende Formulierung erkennen",
+    prompt:`Welche Formulierung passt zu: <strong>${group.label}</strong>?`,
+    type:"mc",
+    choices:[
+      {text:group.phrases[0],lang:"en"},
+      {text:distractGroup.phrases[0],lang:"en"}
+    ],
+    answers:[group.phrases[0]],weight:1,active:false,answerLang:"en",
+    rule:`Für „${group.label}“ gibt es mehrere passende Formulierungen.`,
+    feedback:`Zum Beispiel: <span lang="en"><strong>${group.phrases[0]}</strong></span>`
+  });
+
+  // Guided retrieval: deliberately chosen structural cue, not an arbitrary first word.
+  const guided=group.guided;
+  ITEMS.push({
+    id:sid+"_guided",skill:sid,area:"Say it in English",title:"Formulierung ergänzen",
+    prompt:`Ergänze eine gelernte Formulierung:<br><span lang="en">${guided.prompt}</span>`,
+    type:"text",answers:guided.answers,displayAnswer:guided.answers[0],weight:2,active:true,answerLang:"en",
+    rule:`Eine passende Formulierung ist: <span lang="en">${guided.display}</span>`,
+    feedback:`<span lang="en"><strong>${guided.display}</strong></span>`
+  });
+
+  // Flexible active recall: all photographed phrases in the group are accepted.
+  ITEMS.push({
+    id:sid+"_recall",skill:sid,area:"Say it in English",title:"Selbst formulieren",
+    prompt:`Nenne eine gelernte englische Formulierung für: <strong>${group.label}</strong>.`,
+    type:"text",answers:group.phrases,weight:3,active:true,answerLang:"en",
+    rule:`Mehrere gelernte Formulierungen sind richtig.`,
+    feedback:`Zum Beispiel: <span lang="en"><strong>${group.phrases[0]}</strong></span>`
+  });
+});
+
+
+
+const UNIT_IRREGULARS = [
+  {id:"drive",base:"drive",past:"drove",part:"driven",meaning:"fahren"},
+  {id:"give_up",base:"give up",past:"gave up",part:"given up",meaning:"aufgeben"},
+  {id:"take_off",base:"take off",past:"took off",part:"taken off",meaning:"abnehmen / ausziehen / abziehen"},
+  {id:"go_through",base:"go through",past:"went through",part:"gone through",meaning:"durchgehen"}
+];
+
+UNIT_IRREGULARS.forEach(v=>{
+  const sid="irr_"+v.id;
+  SKILLS[sid]={group:"verbs",label:`${v.base} – ${v.past} – ${v.part}`};
+  ITEMS.push(
+    {id:sid+"_past",skill:sid,area:"Irregular Verbs",title:"Simple Past abrufen",
+     prompt:`<span lang="en">${v.base} → ?</span>`,type:"text",answers:[v.past],weight:3,active:true,answerLang:"en",
+     rule:`<span lang="en">${v.base} – ${v.past} – ${v.part}</span>`,
+     feedback:`<span lang="en"><strong>${v.past}</strong></span>`},
+    {id:sid+"_part",skill:sid,area:"Irregular Verbs",title:"Past Participle abrufen",
+     prompt:`<span lang="en">${v.base} → ${v.past} → ?</span>`,type:"text",answers:[v.part],weight:3,active:true,answerLang:"en",
+     rule:`<span lang="en">${v.base} – ${v.past} – ${v.part}</span>`,
+     feedback:`<span lang="en"><strong>${v.part}</strong></span>`},
+    {id:sid+"_recognition",skill:sid,area:"Irregular Verbs",title:"Formen kennenlernen",
+     prompt:`Welche Formen gehören zu <span lang="en"><strong>${v.base}</strong></span>?`,type:"mc",
+     choices:[{text:`${v.past} – ${v.part}`,lang:"en"},{text:"wrote – written",lang:"en"}],
+     answers:[`${v.past} – ${v.part}`],weight:1,active:false,answerLang:"en",
+     rule:`<span lang="en">${v.base} – ${v.past} – ${v.part}</span>`,
+     feedback:`<span lang="en"><strong>${v.base} – ${v.past} – ${v.part}</strong></span>`}
+  );
+});
+
+const STORE="english7_u1_v0_9_1";
+let state=loadState();
+let queue=[],pos=0,correct=0,lastMode="mixed",answered=false,isUnsureMini=false;
+
+function loadState(){
+  try{
+    const raw=localStorage.getItem(STORE);
+    if(!raw) return {};
+    const parsed=JSON.parse(raw);
+    return parsed && typeof parsed==="object" && !Array.isArray(parsed) ? parsed : {};
+  }catch(e){
+    return {};
+  }
+}
+function defaultSkillState(){
+  return {
+    status:"new",
+    evidence:0,
+    correctTotal:0,
+    wrongTotal:0,
+    correctSinceError:0,
+    activeCorrectEver:false,
+    activeCorrectSinceError:false,
+    lastItem:null
+  };
+}
+function S(skill){
+  return {...defaultSkillState(),...(state[skill]||{})};
+}
+function save(){
+  try{localStorage.setItem(STORE,JSON.stringify(state));}catch(e){}
+  stats();
+}
+function norm(x){
+  return String(x)
+    .normalize("NFKC")
+    .trim()
+    .toLowerCase()
+    .replace(/[’‘`´]/g,"'")
+    .replace(/[“”„"]/g,"")
+    .replace(/…/g,"...")
+    .replace(/\b(?:somebody|someone)\b/g,"sb")
+    .replace(/\bsomething\b/g,"sth")
+    .replace(/\s*\.\.\.\s*/g," ")
+    .replace(/[.!?,;:]+/g," ")
+    .replace(/\s+/g," ")
+    .trim();
+}
+function isCorrect(item,val){
+  return item.answers.some(a=>norm(a)===norm(val));
+}
+function calcStatus(s){
+  if(s.status==="unsure" && s.correctSinceError<2) return "unsure";
+  if(s.evidence>=5 && s.correctSinceError>=2 && s.activeCorrectSinceError) return "mastered";
+  if(s.correctTotal>0) return "practiced";
+  return "new";
+}
+function updateSkill(item,ok){
+  let s=S(item.skill);
+  if(ok){
+    s.correctTotal++;
+    s.correctSinceError++;
+    s.evidence+=item.weight;
+    if(item.active){
+      s.activeCorrectEver=true;
+      s.activeCorrectSinceError=true;
+    }
+  }else{
+    s.wrongTotal++;
+    s.correctSinceError=0;
+    s.activeCorrectSinceError=false;
+    s.evidence=Math.max(0,s.evidence-2);
+    s.status="unsure";
+  }
+  s.lastItem=item.id;
+  s.status=calcStatus(s);
+  state[item.skill]=s;
+  save();
+}
+function stats(){
+  let c={new:0,practiced:0,unsure:0,mastered:0};
+  Object.keys(SKILLS).forEach(k=>c[S(k).status]++);
+  nNew.textContent="Neu "+c.new;
+  nPractice.textContent="Geübt "+c.practiced;
+  nUnsure.textContent="Unsicher "+c.unsure;
+  nMaster.textContent="Beherrscht "+c.mastered;
+  bar.style.width=(100*c.mastered/Object.keys(SKILLS).length)+"%";
+
+  const areas=[
+    ["Grammatik","grammar"],
+    ["Vokabeln & Chunks","vocab"],
+    ["Say it","sayit"],
+    ["Irregular Verbs","verbs"]
+  ];
+  areaProgress.innerHTML=areas.map(([label,g])=>{
+    const keys=Object.keys(SKILLS).filter(k=>SKILLS[k].group===g);
+    const mastered=keys.filter(k=>S(k).status==="mastered").length;
+    return `<div style="margin-top:5px"><strong>${label}:</strong> ${mastered} von ${keys.length} beherrscht</div>`;
+  }).join("");
+}
+function stateLabel(status){
+  return {new:"Neu",practiced:"Geübt",unsure:"Unsicher",mastered:"Beherrscht"}[status];
+}
+function groupSkills(mode){
+  return Object.keys(SKILLS).filter(k=>{
+    if(mode==="mixed") return true;
+    if(mode==="vocab") return SKILLS[k].group==="vocab" || SKILLS[k].group==="sayit";
+    return SKILLS[k].group===mode;
+  });
+}
+function shuffled(arr){
+  return [...arr].sort(()=>Math.random()-.5);
+}
+const itemLastUsed={};
+let useTick=0;
+
+function pickItemForSkill(skill,avoidIds=[],hardAvoidId=null){
+  const all=ITEMS.filter(i=>i.skill===skill);
+  if(!all.length) return null;
+
+  let candidates=all.filter(i=>!avoidIds.includes(i.id));
+
+  // If every variant has already been used, reuse the least recently used one.
+  // But never repeat the immediately preceding/failed item if another variant exists.
+  if(!candidates.length){
+    candidates=all.filter(i=>i.id!==hardAvoidId);
+    if(!candidates.length) candidates=all;
+    candidates.sort((a,b)=>(itemLastUsed[a.id]||0)-(itemLastUsed[b.id]||0));
+    candidates=[candidates[0]];
+  }
+
+  const s=S(skill);
+  if(s.status==="new"){
+    const recognition=candidates.filter(i=>!i.active);
+    if(recognition.length) candidates=recognition;
+  }else{
+    const active=candidates.filter(i=>i.active);
+    if(active.length) candidates=active;
+  }
+
+  // Keep hardAvoidId excluded whenever at least one alternative remains.
+  if(hardAvoidId && candidates.length>1){
+    const withoutImmediate=candidates.filter(i=>i.id!==hardAvoidId);
+    if(withoutImmediate.length) candidates=withoutImmediate;
+  }
+
+  const chosen=candidates[Math.floor(Math.random()*candidates.length)];
+  if(chosen) itemLastUsed[chosen.id]=++useTick;
+  return chosen;
+}
+function buildBaseQueue(mode){
+  let skills=groupSkills(mode);
+  const rank={unsure:0,new:1,practiced:2,mastered:3};
+  skills.sort((a,b)=>rank[S(a).status]-rank[S(b).status]||Math.random()-.5);
+  let q=[];
+  for(const skill of skills){
+    if(q.length>=BASE_SESSION) break;
+    q.push(pickItemForSkill(skill,[S(skill).lastItem].filter(Boolean),S(skill).lastItem));
+  }
+  let safety=0;
+  while(q.length<BASE_SESSION && skills.length && safety<100){
+    safety++;
+    const skill=skills[Math.floor(Math.random()*skills.length)];
+    const recentIds=q.filter(x=>x.skill===skill).map(x=>x.id);
+    const candidate=pickItemForSkill(skill,recentIds,recentIds.length?recentIds[recentIds.length-1]:null);
+    if(candidate) q.push(candidate);
+  }
+  return q.slice(0,BASE_SESSION);
+}
+function buildUnsureQueue(mode){
+  const skills=shuffled(groupSkills(mode).filter(k=>S(k).status==="unsure"));
+  if(!skills.length) return [];
+
+  const perSkill={};
+  for(const skill of skills){
+    const last=S(skill).lastItem;
+    perSkill[skill]=shuffled(ITEMS.filter(i=>i.skill===skill && i.id!==last));
+    if(!perSkill[skill].length) perSkill[skill]=shuffled(ITEMS.filter(i=>i.skill===skill));
+  }
+
+  let q=[];
+  let round=0;
+  while(q.length<MAX_UNSURE_MINI){
+    let added=false;
+    for(const skill of skills){
+      const variants=perSkill[skill];
+      if(round<variants.length && q.length<MAX_UNSURE_MINI){
+        q.push(variants[round]);
+        added=true;
+      }
+    }
+    if(!added) break;
+    round++;
+  }
+  return q;
+}
+function startSession(mode,onlyUnsure=false){
+  lastMode=mode;
+  isUnsureMini=onlyUnsure;
+  queue=onlyUnsure?buildUnsureQueue(mode):buildBaseQueue(mode);
+  pos=0;correct=0;
+  dashboard.classList.add("hidden");
+  result.classList.add("hidden");
+  trainer.classList.remove("hidden");
+  if(!queue.length){finish();return}
+  render();
+}
+function render(){
+  answered=false;
+  const i=queue[pos];
+  if(!i){finish();return}
+  const s=S(i.skill);
+  counter.textContent=isUnsureMini?`Unsicherheiten-Training · Aufgabe ${pos+1}`:`Training · Aufgabe ${pos+1}`;
+  area.textContent=i.area;
+  title.textContent=i.title;
+  prompt.innerHTML=i.prompt;
+  skillState.textContent=stateLabel(s.status);
+  skillState.className="skillstate state-"+s.status;
+  feedback.className="feedback hidden";
+  feedback.innerHTML="";
+  correction.classList.add("hidden");
+  correction.innerHTML="";
+  rule.classList.add("hidden");
+  rule.innerHTML=i.rule;
+  nextBtn.classList.add("hidden");
+  ruleBtn.textContent="Regel ansehen";
+  answerArea.innerHTML="";
+  if(i.type==="mc"){
+    i.choices.forEach(choice=>{
+      const b=document.createElement("button");
+      b.className="choice";
+      const span=document.createElement("span");
+      if(choice.lang) span.lang=choice.lang;
+      span.textContent=choice.text;
+      b.appendChild(span);
+      b.onclick=()=>check(choice.text);
+      answerArea.appendChild(b);
+    });
+    setTimeout(()=>taskCard.focus(),40);
+  }else{
+    const inp=document.createElement("input");
+    inp.type="text";
+    inp.id="input";
+    inp.autocomplete="off";
+    inp.spellcheck=false;
+    inp.setAttribute("aria-label","Deine Antwort");
+    inp.placeholder="Deine Antwort";
+    answerArea.appendChild(inp);
+
+    const b=document.createElement("button");
+    b.className="primary";
+    b.style.marginTop="10px";
+    b.textContent="Prüfen";
+    b.onclick=()=>check(inp.value);
+    answerArea.appendChild(b);
+
+    inp.addEventListener("keydown",e=>{if(e.key==="Enter")check(inp.value)});
+    setTimeout(()=>inp.focus(),50);
+  }
+}
+function scheduleRetest(item){
+  if(isUnsureMini) return;
+  if(queue.length>=MAX_SESSION) return;
+  const minGap=3,maxGap=5;
+  const insertAt=Math.min(queue.length,pos+minGap+Math.floor(Math.random()*(maxGap-minGap+1)));
+  const nearSameSkill=queue.slice(pos+1,insertAt+1).some(x=>x.skill===item.skill);
+  if(nearSameSkill) return;
+
+  const usedIds=queue.filter(x=>x.skill===item.skill).map(x=>x.id);
+  const alt=pickItemForSkill(item.skill,[item.id,...usedIds],item.id);
+  if(!alt) return;
+  queue.splice(insertAt,0,alt);
+}
+function check(val){
+  if(answered) return;
+  answered=true;
+  const i=queue[pos],ok=isCorrect(i,val);
+  updateSkill(i,ok);
+  if(ok) correct++;
+  else scheduleRetest(i);
+
+  feedback.classList.remove("hidden");
+  feedback.classList.add(ok?"ok":"no");
+  feedback.innerHTML=ok
+    ? `✓ <strong>Richtig.</strong>`
+    : `✗ <strong>Noch nicht.</strong>`;
+
+  correction.classList.remove("hidden");
+  correction.innerHTML=ok
+    ? `<strong>Lösung:</strong><br>${i.feedback}`
+    : `<strong>So geht es:</strong><br>${i.rule}<br><br><strong>Richtige Lösung:</strong> <span lang="${i.answerLang||"en"}">${i.displayAnswer||i.answers[0]}</span>`;
+
+  answerArea.querySelectorAll("button,input").forEach(e=>e.disabled=true);
+  nextBtn.classList.remove("hidden");
+  nextBtn.focus();
+}
+function next(){
+  pos++;
+  if(pos>=queue.length) finish();
+  else render();
+}
+function finish(){
+  trainer.classList.add("hidden");
+  result.classList.remove("hidden");
+
+  score.textContent=queue.length?`${correct} / ${queue.length} richtig`:"";
+  const modeSkills=groupSkills(lastMode);
+  const unsure=modeSkills.filter(k=>S(k).status==="unsure").length;
+  const mastered=modeSkills.filter(k=>S(k).status==="mastered").length;
+
+  if(!queue.length){
+    resultText.textContent="Aktuell gibt es keine unsicheren Lernziele in diesem Bereich.";
+    continueUnsure.classList.add("hidden");
+  }else if(unsure){
+    resultText.textContent=`${unsure} Lernziel${unsure===1?" ist":"e sind"} noch unsicher. Diese werden im nächsten Training bevorzugt und mit anderen Varianten wiederholt.`;
+    continueUnsure.classList.remove("hidden");
+  }else{
+    resultText.textContent=`Kein Lernziel ist aktuell unsicher. ${mastered} Lernziel${mastered===1?" ist":"e sind"} bereits beherrscht.`;
+    continueUnsure.classList.add("hidden");
+  }
+}
+function repeatUnsure(){
+  startSession(lastMode,true);
+}
+function toggleRule(){
+  rule.classList.toggle("hidden");
+  ruleBtn.textContent=rule.classList.contains("hidden")?"Regel ansehen":"Regel schließen";
+}
+function home(){
+  trainer.classList.add("hidden");
+  result.classList.add("hidden");
+  dashboard.classList.remove("hidden");
+  stats();
+}
+function resetProgress(){
+  if(confirm("Testfortschritt wirklich zurücksetzen?")){
+    state={};
+    try{localStorage.removeItem(STORE);}catch(e){}
+    save();
+    home();
+  }
+}
+function contentAudit(){
+  const errors=[];
+  const ids=new Set();
+  ITEMS.forEach(i=>{
+    if(ids.has(i.id)) errors.push("Doppelte Aufgaben-ID: "+i.id);
+    ids.add(i.id);
+    if(!SKILLS[i.skill]) errors.push("Fehlender Skill für Aufgabe: "+i.id);
+    if(!Array.isArray(i.answers)||!i.answers.length) errors.push("Keine Antwort für Aufgabe: "+i.id);
+
+    if(i.type==="mc" && Array.isArray(i.choices)){
+      const choiceTexts=i.choices.map(c=>typeof c==="string"?c:c.text);
+      const normalizedChoices=choiceTexts.map(norm);
+      if(new Set(normalizedChoices).size!==normalizedChoices.length){
+        errors.push("Doppelte MC-Option: "+i.id);
+      }
+      const correct=new Set((i.answers||[]).map(norm));
+      const correctChoiceIndexes=normalizedChoices
+        .map((v,index)=>correct.has(v)?index:-1)
+        .filter(index=>index>=0);
+      if(correctChoiceIndexes.length!==1){
+        errors.push("MC braucht genau eine richtige Option: "+i.id);
+      }
+    }
+  });
+
+  Object.keys(SKILLS).forEach(skill=>{
+    const items=ITEMS.filter(i=>i.skill===skill);
+    if(!items.length) errors.push("Skill ohne Aufgabe: "+skill);
+    const hasRecognition=items.some(i=>!i.active);
+    const hasRecall=items.some(i=>i.active);
+    // Grammar can intentionally be active-heavy; vocabulary/Say-it must have both.
+    if(["vocab","sayit"].includes(SKILLS[skill].group)){
+      if(!hasRecognition) errors.push("Kein Recognition-Item: "+skill);
+      if(!hasRecall) errors.push("Kein Active-Recall-Item: "+skill);
+    }
+  });
+
+  FULL_VOCAB.forEach(([en])=>{
+    if(!SKILLS[vocabSkillId(en)]) errors.push("Vokabel ohne Skill: "+en);
+  });
+
+  if(errors.length) console.error("English 7 content audit:",errors);
+  return errors;
+}
+
+const CONTENT_AUDIT_ERRORS=contentAudit();
+stats();
+</script>
+</body>
+</html>
