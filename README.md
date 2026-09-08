@@ -2,6 +2,9 @@
 
 Eine Reihe mobile-first Lern-Apps für Englisch in den Klassen 5 bis 7.
 
+Grammatik · Vokabeln · adaptives Training
+Pädagogisches Konzept & Entwicklung: Prof. Dr. Eleonore Soei-Winkels
+
 ## Apps
 
 ### English 5
